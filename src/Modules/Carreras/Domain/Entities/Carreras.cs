@@ -7,7 +7,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public class Carreras
     {
-         public int IdCarrera { get; set; }
+        public int IdCarrera { get; set; }
         public string NombreCarrera { get; set; } = string.Empty; 
     }
 }
