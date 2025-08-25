@@ -1,5 +1,5 @@
 {
     "ConnectionStrings": {
-        "MysqlConnection": "Server=localhost;Port=3306;Database=NombreDeLaBaseDeDatos;User=UsuariodelogueoenMySql;Password=ContraseñaDelUsuario;"
+        "MysqlConnection": "Server=localhost;Port=3306;Database=BasePrueba;User=campus2023;Password=campus2023;"
     }
 }

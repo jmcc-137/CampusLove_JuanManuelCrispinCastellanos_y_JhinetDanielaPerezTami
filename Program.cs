@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+
+using examen.src.Modules.Shared.Helpers;
+using Microsoft.EntityFrameworkCore;
+var context = DbContextFactory.Create(); 
