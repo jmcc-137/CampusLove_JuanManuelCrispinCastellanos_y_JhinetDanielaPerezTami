@@ -1,10 +1,6 @@
-﻿using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS;
-
-// var MP = new MenuPrincipal();
-// MP.MostrarMenuPrincipal();
-
-var MI = new MenuInicio();
-MI.MostrarMenuInicio();
-
-var MP = new MenuPrincipal();
-MP.MostrarMenuPrincipal();
+﻿using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Helpers;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS;
+using Microsoft.EntityFrameworkCore;
+var context = DbContextFactory.Create();
+var mp = new MenuPrincipal();
+mp.MostrarMenuPrincipal();
