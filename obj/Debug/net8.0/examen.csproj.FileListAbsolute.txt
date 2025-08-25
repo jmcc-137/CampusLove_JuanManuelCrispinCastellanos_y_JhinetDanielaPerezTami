@@ -125,3 +125,4 @@
 /home/jm/developnet/CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami/obj/Debug/net8.0/examen.genruntimeconfig.cache
 /home/jm/developnet/CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami/obj/Debug/net8.0/ref/examen.dll
 /home/jm/developnet/CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami/bin/Debug/net8.0/appsettings.json
+/home/jm/developnet/CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami/bin/Debug/net8.0/Spectre.Console.dll

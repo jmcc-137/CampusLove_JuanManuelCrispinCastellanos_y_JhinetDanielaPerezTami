@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
 {
@@ -10,61 +8,50 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
         public void MostrarMenuInicio()
         {
             bool salir = false;
-
             while (!salir)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("============================================");
-                Console.WriteLine("|        Campus Love-Menu Inicio           |");
-                Console.WriteLine("============================================");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("| 1. Ingresar cuenta                        |");
-                Console.WriteLine("| 2. Crear Cuenta                           |");
-                Console.WriteLine("| 3. salir                                  |");
-                Console.WriteLine("============================================");
-                Console.Write("Seleccione una opcion: "); // ← Faltaba el ;
+                AnsiConsole.Clear();
 
-                string input = Console.ReadLine() ?? "";
-                
-                if (int.TryParse(input, out int opcion)) // ← Se declara 'opcion' aquí
+                // Título bonito
+                AnsiConsole.Write(
+                    new FigletText("💖 Campus Love 💖")
+                        .Centered()
+                        .Color(Color.HotPink));
+
+                // Menú con emojis y colores
+                var opcion = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[yellow]✨ Selecciona una opción de inicio ✨[/]")
+                        .HighlightStyle("bold green")
+                        .AddChoices(new[]
+                        {
+                            "[cyan]🔑 Ingresar cuenta[/]",
+                            "[green]👤 Registrarse como nuevo usuario[/]",
+                            "[red]🚪 Salir[/]"
+                        }));
+
+                switch (opcion)
                 {
-                    switch (opcion)
-                    {
-                        case 1:
-                            //ingresar
-                            pausa();
-                            break;
-
-                        case 2:
-                            //crear cuenta
-                            pausa();
-                            break;
-
-                        case 3:
-                            Console.WriteLine("Saliendo de Campus Love...");
-                            pausa();
-                            salir = true;
-                            break;
-
-                        default:
-                            Console.WriteLine("Opción inválida.");
-                            pausa();
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Por favor, ingrese un número válido.");
-                    pausa();
+                    case "[cyan]🔑 Ingresar cuenta[/]":
+                        // Lógica para ingresar cuenta
+                        pausa();
+                        break;
+                    case "[green]👤 Registrarse como nuevo usuario[/]":
+                        // Lógica para crear cuenta
+                        pausa();
+                        break;
+                    case "[red]🚪 Salir[/]":
+                        AnsiConsole.MarkupLine("[red]👋 Saliendo de Campus Love...[/]");
+                        pausa();
+                        salir = true;
+                        break;
                 }
             }
         }
 
         static void pausa()
         {
-            Console.WriteLine("\nPresiona una tecla para continuar...");
+            AnsiConsole.MarkupLine("[grey]\nPresiona una tecla para continuar...[/]");
             Console.ReadKey();
         }
     }
