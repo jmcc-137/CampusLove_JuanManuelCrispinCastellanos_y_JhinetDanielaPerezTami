@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySqlConnector;
 
-namespace examen.src.Modules.Shared.Helpers;
+namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Helpers;
 
 public class MySqlVersionResolver
 {

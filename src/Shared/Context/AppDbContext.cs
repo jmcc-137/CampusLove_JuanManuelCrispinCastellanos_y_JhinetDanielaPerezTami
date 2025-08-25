@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace examen.src.Modules.Shared.Context;
+namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Context;
 
 public class AppDbContext : DbContext
 {
@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     }
     // los Dbset van aqui
     // public DbSet<Jugador> juagador => set<Jugadores>();
-     public DbSet<examen.src.Modules.moduloEjemplo.Domain.Entities.ejemplo> Ejemplos { get; set; }
+     public DbSet<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Domain.Entities.ejemplo> Ejemplos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

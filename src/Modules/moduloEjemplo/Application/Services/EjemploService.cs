@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using examen.src.Modules.moduloEjemplo.Application.Interfaces;
-using examen.src.Modules.moduloEjemplo.Domain.Entities;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Application.Interfaces;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Domain.Entities;
 
-namespace examen.src.Modules.moduloEjemplo.Application.Services
+
+
+namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Application.Services
 {
     public class EjemploService : IEjemploServices
     {

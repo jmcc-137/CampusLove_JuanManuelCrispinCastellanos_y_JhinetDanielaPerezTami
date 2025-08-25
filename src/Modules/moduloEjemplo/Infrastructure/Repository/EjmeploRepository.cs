@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using examen.src.Modules.moduloEjemplo.Application.Interfaces;
-using examen.src.Modules.moduloEjemplo.Domain.Entities;
-using examen.src.Modules.Shared.Context;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Application.Interfaces;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Domain.Entities;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Context;
+
 using Microsoft.EntityFrameworkCore;
 
-namespace examen.src.Modules.moduloEjemplo.Infrastructure.Repository
+namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.moduloEjemplo.Infrastructure.Repository
 {
     public class EjmeploRepository : IEjemploRepositiory
     {
