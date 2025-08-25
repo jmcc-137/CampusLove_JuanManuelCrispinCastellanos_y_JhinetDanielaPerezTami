@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS Interacciones (
     FOREIGN KEY (IdUsuarioOrigen) REFERENCES Usuarios(IdUsuario),
     FOREIGN KEY (IdUsuarioDestino) REFERENCES Usuarios(IdUsuario),
     FOREIGN KEY (IdTipoInteraccion) REFERENCES TiposInteracciones(IdTipoInteraccion),
-    UNIQUE KEY unique_interaccion_diaria (IdUsuarioOrigen, IdUsuarioDestino, DATE(FechaInteraccion))
+    UNIQUE KEY unique_interaccion (IdUsuarioOrigen, IdUsuarioDestino, FechaInteraccion)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Matches (
