@@ -1,6 +1,7 @@
 using System;
 using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Services;
 using Spectre.Console;
+using Microsoft.EntityFrameworkCore;
 
 namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
 {
@@ -52,18 +53,33 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                     case "[green]🔍 Ver perfiles y dar Like/Dislike[/]":
                         break;
                     case "[yellow]✏️ Editar Cuenta[/]":
-
                         break;
                     case "[red]❤️ Ir a Matches[/]":
-
                         break;
                     case "[purple]📊 Ver estadísticas del sistema[/]":
                         break;
                     case "[darkorange]🗑️ Eliminar Cuenta[/]":
+                        // Obtener el usuario por nombre de usuario
+                        var usuarioEliminar = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
+                        if (usuarioEliminar != null)
+                        {
+                            var eliminarCuentaService = new EliminarCuentaService(context);
+                            var eliminado = await eliminarCuentaService.EliminarCuenta(usuarioEliminar.IdUsuario);
+                            if (eliminado)
+                            {
+                                AnsiConsole.MarkupLine("[red]Tu cuenta ha sido eliminada exitosamente. Presiona cualquier tecla para continuar...[/]");
+                                Console.ReadKey();
+                                salir = true;
+                            }
+                        }
+                        else
+                        {
+                            AnsiConsole.MarkupLine("[red]No se encontró tu usuario. No se pudo eliminar la cuenta.[/]");
+                            Console.ReadKey();
+                        }
                         break;
                     case "[grey]🚪 Salir[/]":
                         AnsiConsole.MarkupLine("[red]👋 Saliendo de Campus Love...[/]");
-
                         salir = true;
                         break;
                 }
