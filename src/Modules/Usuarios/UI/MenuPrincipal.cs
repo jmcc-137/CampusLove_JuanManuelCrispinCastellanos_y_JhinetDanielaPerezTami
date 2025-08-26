@@ -53,6 +53,19 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                     case "[green]🔍 Ver perfiles y dar Like/Dislike[/]":
                         break;
                     case "[yellow]✏️ Editar Cuenta[/]":
+                        var usuarioEditar = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
+                        if (usuarioEditar != null)
+                        {
+                            var editarUsuarioService = new EditarUsuarioService(context);
+                            await editarUsuarioService.EditarCuenta(usuarioEditar.IdUsuario);
+                            AnsiConsole.MarkupLine("[grey]Presiona cualquier tecla para continuar...[/]");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            AnsiConsole.MarkupLine("[red]No se encontró tu usuario. No se pudo editar la cuenta.[/]");
+                            Console.ReadKey();
+                        }
                         break;
                     case "[red]❤️ Ir a Matches[/]":
                         break;
