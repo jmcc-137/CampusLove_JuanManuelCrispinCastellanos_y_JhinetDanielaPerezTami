@@ -20,6 +20,26 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.S
             builder.Property(u => u.Contrasena)
                 .IsRequired()
                 .HasMaxLength(100);
+                
+            builder.HasMany(u => u.InteraccionesOrigen)
+                .WithOne(i => i.UsuarioOrigen)
+                .HasForeignKey(i => i.IdUsuarioOrigen)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.InteraccionesDestino)
+                .WithOne(i => i.UsuarioDestino)
+                .HasForeignKey(i => i.IdUsuarioDestino)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Matches1)
+                .WithOne(m => m.Usuario1)
+                .HasForeignKey(m => m.IdUsuario1)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Matches2)
+                .WithOne(m => m.Usuario2)
+                .HasForeignKey(m => m.IdUsuario2)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
