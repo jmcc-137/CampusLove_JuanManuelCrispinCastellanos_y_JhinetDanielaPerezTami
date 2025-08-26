@@ -7,7 +7,8 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public class Intereses
     {
-        public int IdIntereses { get; set; }
-        public string NombreIntereses { get; set; } = string.Empty;
+        public int IdInteres { get; set; }
+        public string NombreInteres { get; set; } = string.Empty;
+        public virtual ICollection<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.UsuariosIntereses.Domain.Entities.UsuariosIntereses> UsuariosIntereses { get; set; } = new List<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.UsuariosIntereses.Domain.Entities.UsuariosIntereses>();
     }
 }
