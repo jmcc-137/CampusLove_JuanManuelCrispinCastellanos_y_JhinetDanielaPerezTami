@@ -20,13 +20,21 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 
         public async Task VerCuenta(string nombreUsuario)
         {
-            var usuario = await _context.Set<Usuarios>().FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario);
+            var usuario = await _context.Set<Usuarios>()
+                .Include(u => u.UsuariosIntereses)
+                    .ThenInclude(ui => ui.Interes)
+                .FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario);
             if (usuario == null)
             {
                 AnsiConsole.MarkupLine("[red]No se encontró información del usuario.[/]");
                 return;
             }
-            AnsiConsole.Write(new Panel($"[bold]Nombre:[/] {usuario.Nombre}\n[bold]Edad:[/] {usuario.Edad}\n[bold]Usuario:[/] {usuario.NombreUsuario}\n[bold]Frase Perfil:[/] {usuario.FrasePerfil}\n[bold]Créditos diarios:[/] {usuario.CreditosDiarios}\n[bold]Fecha registro:[/] {usuario.FechaRegistro:dd/MM/yyyy}")
+            var intereses = usuario.UsuariosIntereses
+                .Select(ui => ui.Interes != null ? ui.Interes.NombreInteres : "")
+                .Where(nombre => !string.IsNullOrEmpty(nombre))
+                .ToList();
+            string interesesTexto = intereses.Count > 0 ? string.Join(", ", intereses) : "Sin intereses registrados";
+            AnsiConsole.Write(new Panel($"[bold]Nombre:[/] {usuario.Nombre}\n[bold]Edad:[/] {usuario.Edad}\n[bold]Usuario:[/] {usuario.NombreUsuario}\n[bold]Frase Perfil:[/] {usuario.FrasePerfil}\n[bold]Créditos diarios:[/] {usuario.CreditosDiarios}\n[bold]Fecha registro:[/] {usuario.FechaRegistro:dd/MM/yyyy}\n[bold]Intereses:[/] {interesesTexto}")
                 .Header("[cyan]Información de tu cuenta[/]")
                 .BorderColor(Color.HotPink));
         }

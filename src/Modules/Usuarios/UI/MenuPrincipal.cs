@@ -34,7 +34,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                             "[cyan]👤 Ver cuenta[/]",
                             "[green]🔍 Ver perfiles y dar Like/Dislike[/]",
                             "[yellow]✏️ Editar Cuenta[/]",
-                            "[blue]📝 Añadir Información Personal[/]",
                             "[red]❤️ Ir a Matches[/]",
                             "[purple]📊 Ver estadísticas del sistema[/]",
                             "[darkorange]🗑️ Eliminar Cuenta[/]",
@@ -54,8 +53,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                         break;
                     case "[yellow]✏️ Editar Cuenta[/]":
 
-                        break;
-                    case "[blue]📝 Añadir Información Personal[/]":
                         break;
                     case "[red]❤️ Ir a Matches[/]":
 

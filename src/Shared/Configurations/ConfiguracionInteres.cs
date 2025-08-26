@@ -16,7 +16,8 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.S
             builder.HasKey(i => i.IdInteres);
             builder.Property(i => i.NombreInteres)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(30);
+            builder.HasIndex(i => i.NombreInteres).IsUnique();
         }
     }
 }

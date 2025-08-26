@@ -12,12 +12,20 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.S
     {
         public void Configure(EntityTypeBuilder<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.UsuariosIntereses.Domain.Entities.UsuariosIntereses> builder)
         {
-            builder.ToTable("UsuariosInteres");
+            builder.ToTable("UsuariosIntereses");
             builder.HasKey(ui => ui.IdUsuarioInteres);
             builder.Property(ui => ui.IdUsuario)
                 .IsRequired();
             builder.Property(ui => ui.IdInteres)
                 .IsRequired();
+
+            builder.HasOne(ui => ui.Usuario)
+                .WithMany(u => u.UsuariosIntereses)
+                .HasForeignKey(ui => ui.IdUsuario);
+
+            builder.HasOne(ui => ui.Interes)
+                .WithMany(i => i.UsuariosIntereses)
+                .HasForeignKey(ui => ui.IdInteres);
         }
     }
 }
