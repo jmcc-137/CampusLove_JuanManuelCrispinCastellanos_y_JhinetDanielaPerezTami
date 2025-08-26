@@ -38,19 +38,31 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 
         public async Task<bool> VerDarLikeDislike(int idUsuarioOrigen, int idUsuarioDestino, int idTipoInteraccion)
         {
-            // Validar que los usuarios existen y están activos
             var usuarioOrigen = await _context.Usuarios.FindAsync(idUsuarioOrigen);
             var usuarioDestino = await _context.Usuarios.FindAsync(idUsuarioDestino);
             if (usuarioOrigen == null || usuarioDestino == null || !usuarioOrigen.Activo || !usuarioDestino.Activo)
                 return false;
 
-            // Validar que el tipo de interacción existe
             var tipoInteraccion = await _context.TiposInteracciones.FindAsync(idTipoInteraccion);
             if (tipoInteraccion == null)
                 return false;
 
-            // Solo permitir una interacción por día entre los mismos usuarios
             var hoy = DateTime.Today;
+            // Solo limitar likes, no dislikes
+            bool esLike = tipoInteraccion.NombreTipo.ToUpper() == "LIKE";
+            if (esLike)
+            {
+                int likesHoy = await _context.Interacciones.CountAsync(i =>
+                    i.IdUsuarioOrigen == idUsuarioOrigen &&
+                    i.IdTipoInteraccion == tipoInteraccion.IdTipoInteraccion &&
+                    i.FechaInteraccion.Date == hoy);
+                if (likesHoy >= usuarioOrigen.CreditosDiarios)
+                {
+                    AnsiConsole.MarkupLine($"[red]Has alcanzado tu límite diario de likes ({usuarioOrigen.CreditosDiarios}). Intenta mañana.[/]");
+                    return false;
+                }
+            }
+
             var existe = await _context.Interacciones.AnyAsync(i =>
                 i.IdUsuarioOrigen == idUsuarioOrigen &&
                 i.IdUsuarioDestino == idUsuarioDestino &&

@@ -19,13 +19,10 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
             {
                 AnsiConsole.Clear();
 
-                // Título con Figlet estilizado
                 AnsiConsole.Write(
                     new FigletText("💖 Campus Love 💖")
                         .Centered()
                         .Color(Color.HotPink));
-
-                // Menú con colores y emojis
                 var opcion = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[yellow]✨ ¿Qué deseas hacer? ✨[/]")
@@ -50,14 +47,14 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                         Console.ReadKey();
                         break;
                     case "[green]🔍 Ver perfiles y dar Like/Dislike[/]":
-                        // Inicializar tipos de interacción si no existen
+                    
                         if (!await context.TiposInteracciones.AnyAsync())
                         {
                             context.TiposInteracciones.Add(new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones { NombreTipo = "LIKE" });
                             context.TiposInteracciones.Add(new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones { NombreTipo = "DISLIKE" });
                             await context.SaveChangesAsync();
                         }
-                        // Mostrar perfiles y dar Like/Dislike
+ 
                         var usuarioActual = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
                         if (usuarioActual == null)
                         {
@@ -66,14 +63,14 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                             break;
                         }
 
-                        // Obtener todos los usuarios excepto el actual y que estén activos
+                       
                         var usuarios = await context.Usuarios
                             .Where(u => u.IdUsuario != usuarioActual.IdUsuario && u.Activo)
                             .Include(u => u.UsuariosIntereses)
                                 .ThenInclude(ui => ui.Interes)
                             .ToListAsync();
 
-                        // Obtener los tipos de interacción (LIKE y DISLIKE)
+                      
                         var tipoLike = await context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones>()
                             .FirstOrDefaultAsync(t => t.NombreTipo.ToUpper() == "LIKE");
                         var tipoDislike = await context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones>()
@@ -104,10 +101,10 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                                 break;
 
                             int idTipoInteraccion = accion == "💖 Corazón (Like)" ? tipoLike.IdTipoInteraccion : tipoDislike.IdTipoInteraccion;
-                            // Registrar la interacción
+                            
                             await verDarLikeDislikeService.VerDarLikeDislike(usuarioActual.IdUsuario, u.IdUsuario, idTipoInteraccion);
 
-                            // Preguntar si quiere seguir viendo perfiles
+                          
                             var seguir = AnsiConsole.Confirm("¿Deseas ver el siguiente perfil?");
                             if (!seguir)
                                 break;
@@ -134,7 +131,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                    
                     
                     case "[darkorange]🗑️ Eliminar Cuenta[/]":
-                        // Obtener el usuario por nombre de usuario
+                       
                         var usuarioEliminar = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
                         if (usuarioEliminar != null)
                         {

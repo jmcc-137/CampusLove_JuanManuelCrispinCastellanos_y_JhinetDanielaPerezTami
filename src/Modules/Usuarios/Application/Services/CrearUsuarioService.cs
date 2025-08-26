@@ -21,7 +21,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 
         public async Task CrearUsuario()
         {
-            // Intereses preestablecidos
+         
             var interesesPredefinidos = new List<string> { "Deportes", "Música", "Cine", "Lectura", "Viajes", "Tecnología", "Arte", "Cocina", "Videojuegos", "Mascotas", "Otro" };
             var interesesSeleccionados = AnsiConsole.Prompt(
                 new Spectre.Console.MultiSelectionPrompt<string>()
@@ -32,18 +32,18 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
                     .InstructionsText("[grey](<espacio> para seleccionar, <enter> para continuar)[/]")
                     .AddChoices(interesesPredefinidos)
             );
-            // Opciones predefinidas
+            
             var generosPredefinidos = new List<string> { "Masculino", "Femenino", "Otro" };
             var carrerasPredefinidas = new List<string> { "Ingeniería", "Medicina", "Derecho", "Arquitectura", "Psicología", "Administración", "Contaduría", "Comunicación", "Educación", "Otra" };
             var generosDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Generos.Domain.Entities.Genero>().Select(g => g.NombreGenero).ToListAsync();
             var carrerasDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Carreras.Domain.Entities.Carreras>().Select(c => c.NombreCarrera).ToListAsync();
             var opcionesGenero = generosPredefinidos.Union(generosDb).Distinct().ToList();
             var opcionesCarrera = carrerasPredefinidas.Union(carrerasDb).Distinct().ToList();
-            // Filtrar corchetes para evitar error de markup
+          
             opcionesGenero = opcionesGenero.Select(g => g.Replace("[", "(").Replace("]", ")")).ToList();
             opcionesCarrera = opcionesCarrera.Select(c => c.Replace("[", "(").Replace("]", ")")).ToList();
 
-            // Pedir datos al usuario y validar que no sean vacíos o nulos
+           
             string nombre = AnsiConsole.Prompt(
                 new TextPrompt<string>("Ingrese su nombre:")
                     .Validate(n => !string.IsNullOrWhiteSpace(n) ? ValidationResult.Success() : ValidationResult.Error("El nombre no puede estar vacío.")));
@@ -94,7 +94,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
                 new TextPrompt<string>("Ingrese su contraseña:")
                     .Validate(p => !string.IsNullOrWhiteSpace(p) ? ValidationResult.Success() : ValidationResult.Error("La contraseña no puede estar vacía.")));
 
-            // Buscar o crear género
+          
             var generoDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Generos.Domain.Entities.Genero>().FirstOrDefaultAsync(g => g.NombreGenero == genero);
             if (generoDb == null)
             {
@@ -104,7 +104,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
             }
             int idGenero = generoDb.IdGenero;
 
-            // Buscar o crear carrera
+            
             var carreraDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Carreras.Domain.Entities.Carreras>().FirstOrDefaultAsync(c => c.NombreCarrera == carrera);
             if (carreraDb == null)
             {
@@ -114,7 +114,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
             }
             int idCarrera = carreraDb.IdCarrera;
 
-            // Crear entidad usuario
+           
             var usuario = new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios
             {
                 Nombre = nombre,
@@ -133,14 +133,14 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
             await _usuarioRepository.Add(usuario);
             await _usuarioRepository.SaveAsync();
 
-            // Guardar intereses seleccionados
+           
             if (interesesSeleccionados.Count > 0)
             {
                 var usuarioDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios>()
                     .FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario);
                 foreach (var interesNombre in interesesSeleccionados)
                 {
-                    // Buscar o crear el interés
+                   
                     var interes = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Intereses.Domain.Entities.Intereses>()
                         .FirstOrDefaultAsync(i => i.NombreInteres == interesNombre);
                     if (interes == null)

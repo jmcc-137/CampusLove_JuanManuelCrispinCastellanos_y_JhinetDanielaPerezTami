@@ -69,13 +69,12 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
             {
                 AnsiConsole.Clear();
 
-                // Título bonito
+                
                 AnsiConsole.Write(
                     new FigletText("💖Campus Love 💖")
                         .Centered()
                         .Color(Color.HotPink));
 
-                // Menú con emojis y colores
                 var opcion = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[yellow]✨ Selecciona una opción de inicio ✨[/]")
@@ -93,13 +92,12 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                         var nombreUsuario = await IngresarCuenta();
                         if (!string.IsNullOrEmpty(nombreUsuario))
                         {
-                            // Mostrar menú principal tras login exitoso, pasando el usuario
+                           
                             var menuPrincipal = new MenuPrincipal(nombreUsuario);
                             await menuPrincipal.MostrarMenuPrincipal();
                         }
                         break;
                     case "[green]👤 Registrarse como nuevo usuario[/]":
-                        // Crear usuario
                         var context = CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Helpers.DbContextFactory.Create();
                         var usuarioRepository = new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Infrastructure.Repository.UsuarioRepository(context);
                         var crearUsuarioService = new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Services.CrearUsuarioService(usuarioRepository, context);
