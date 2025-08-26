@@ -7,6 +7,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public interface IVerCuentaService
     {
-        
+        Task VerCuenta(string nombreUsuario);
     }
 }

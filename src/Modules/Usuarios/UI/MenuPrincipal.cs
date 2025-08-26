@@ -1,11 +1,17 @@
 using System;
+using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Services;
 using Spectre.Console;
 
 namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
 {
-    public class MenuPrincipal
+    public class MenuPrincipal: IMenuPrincipalServices
     {
-        public void MostrarMenuPrincipal()
+        private readonly string _nombreUsuario;
+        public MenuPrincipal(string nombreUsuario)
+        {
+            _nombreUsuario = nombreUsuario;
+        }
+        public async Task MostrarMenuPrincipal()
         {
             bool salir = false;
             while (!salir)
@@ -34,43 +40,39 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                             "[darkorange]🗑️ Eliminar Cuenta[/]",
                             "[grey]🚪 Salir[/]"
                         }));
+                var context = CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Shared.Helpers.DbContextFactory.Create();
+                var verCuentaService = new VerCuentaService(context);
 
                 switch (opcion)
                 {
                     case "[cyan]👤 Ver cuenta[/]":
-                        pausa();
+                        await verCuentaService.VerCuenta(_nombreUsuario);
+                        AnsiConsole.MarkupLine("[grey]Presiona cualquier tecla para continuar...[/]");
+                        Console.ReadKey();
                         break;
                     case "[green]🔍 Ver perfiles y dar Like/Dislike[/]":
-                        pausa();
                         break;
                     case "[yellow]✏️ Editar Cuenta[/]":
-                        pausa();
+
                         break;
                     case "[blue]📝 Añadir Información Personal[/]":
-                        pausa();
                         break;
                     case "[red]❤️ Ir a Matches[/]":
-                        pausa();
+
                         break;
                     case "[purple]📊 Ver estadísticas del sistema[/]":
-                        pausa();
                         break;
                     case "[darkorange]🗑️ Eliminar Cuenta[/]":
-                        pausa();
                         break;
                     case "[grey]🚪 Salir[/]":
                         AnsiConsole.MarkupLine("[red]👋 Saliendo de Campus Love...[/]");
-                        pausa();
+
                         salir = true;
                         break;
                 }
             }
         }
 
-        static void pausa()
-        {
-            AnsiConsole.MarkupLine("[grey]\nPresiona una tecla para continuar...[/]");
-            Console.ReadKey();
-        }
+
     }
 }

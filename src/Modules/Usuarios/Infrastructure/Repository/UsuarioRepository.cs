@@ -24,10 +24,9 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Domain.Entities.Usuarios>> ObtenerUsuariosAsync()
+        public async Task<IEnumerable<Domain.Entities.Usuarios>> ObtenerUsuariosAsync()
         {
-            // Implementación de acceso a datos
-            throw new NotImplementedException();
+            return await _context.Set<Domain.Entities.Usuarios>().ToListAsync();
         }
 
         public async Task<Domain.Entities.Usuarios> ObtenerUsuarioPorIdAsync(int id)

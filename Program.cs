@@ -3,7 +3,15 @@ using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modul
 using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Infrastructure.Repository;
 using CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS;
 using Microsoft.EntityFrameworkCore;
-var context = DbContextFactory.Create();
-var mp = new MenuPrincipal();
-var crearUsuarioService = new CrearUsuarioService(new UsuarioRepository(context), context);
-crearUsuarioService.CrearUsuario().Wait();
+
+
+
+class Program
+{
+	static async Task Main(string[] args)
+	{
+		var menuInicio = new MenuInicio();
+		await menuInicio.MostrarMenuInicio();
+
+	}
+}

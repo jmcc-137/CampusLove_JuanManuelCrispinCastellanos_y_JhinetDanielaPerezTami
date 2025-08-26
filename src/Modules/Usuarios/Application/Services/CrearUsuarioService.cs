@@ -52,9 +52,10 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
                 new TextPrompt<string>("Ingrese su nombre de usuario:")
                     .Validate(u => !string.IsNullOrWhiteSpace(u) ? ValidationResult.Success() : ValidationResult.Error("El nombre de usuario no puede estar vacío.")));
 
-            string contrasena = AnsiConsole.Prompt(
+            string contrasenaPlano = AnsiConsole.Prompt(
                 new TextPrompt<string>("Ingrese su contraseña:")
                     .Validate(p => !string.IsNullOrWhiteSpace(p) ? ValidationResult.Success() : ValidationResult.Error("La contraseña no puede estar vacía.")));
+            string contrasena = HashSHA256(contrasenaPlano);
 
             // Buscar o crear el género seleccionado
             var generoDb = await _context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Generos.Domain.Entities.Genero>()
@@ -99,6 +100,17 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
                 FechaRegistro = DateTime.Now,
                 Activo = true
             };
+
+        // Función local para hashear contraseña
+        string HashSHA256(string input)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(input);
+                var hash = sha256.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
 
             await _usuarioRepository.Add(usuario);
             await _usuarioRepository.SaveAsync();
