@@ -7,6 +7,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public interface IVerDarLikeDislikeServices
     {
-        
+      Task<bool> VerDarLikeDislike(int idUsuarioOrigen, int idUsuarioDestino, int idTipoInteraccion);   
     }
 }

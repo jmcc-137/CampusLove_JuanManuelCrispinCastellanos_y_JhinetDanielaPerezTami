@@ -36,7 +36,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                             "[green]🔍 Ver perfiles y dar Like/Dislike[/]",
                             "[yellow]✏️ Editar Cuenta[/]",
                             "[red]❤️ Ir a Matches[/]",
-                            "[purple]📊 Ver estadísticas del sistema[/]",
                             "[darkorange]🗑️ Eliminar Cuenta[/]",
                             "[grey]🚪 Salir[/]"
                         }));
@@ -51,6 +50,69 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                         Console.ReadKey();
                         break;
                     case "[green]🔍 Ver perfiles y dar Like/Dislike[/]":
+                        // Inicializar tipos de interacción si no existen
+                        if (!await context.TiposInteracciones.AnyAsync())
+                        {
+                            context.TiposInteracciones.Add(new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones { NombreTipo = "LIKE" });
+                            context.TiposInteracciones.Add(new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones { NombreTipo = "DISLIKE" });
+                            await context.SaveChangesAsync();
+                        }
+                        // Mostrar perfiles y dar Like/Dislike
+                        var usuarioActual = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
+                        if (usuarioActual == null)
+                        {
+                            AnsiConsole.MarkupLine("[red]No se encontró tu usuario. No se puede mostrar perfiles.[/]");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        // Obtener todos los usuarios excepto el actual y que estén activos
+                        var usuarios = await context.Usuarios
+                            .Where(u => u.IdUsuario != usuarioActual.IdUsuario && u.Activo)
+                            .Include(u => u.UsuariosIntereses)
+                                .ThenInclude(ui => ui.Interes)
+                            .ToListAsync();
+
+                        // Obtener los tipos de interacción (LIKE y DISLIKE)
+                        var tipoLike = await context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones>()
+                            .FirstOrDefaultAsync(t => t.NombreTipo.ToUpper() == "LIKE");
+                        var tipoDislike = await context.Set<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.TiposInteracciones.Domain.Entities.TiposInteracciones>()
+                            .FirstOrDefaultAsync(t => t.NombreTipo.ToUpper() == "DISLIKE");
+                        if (tipoLike == null || tipoDislike == null)
+                        {
+                            AnsiConsole.MarkupLine("[red]No se encontraron los tipos de interacción LIKE/DISLIKE en la base de datos.[/]");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Interfaces.IVerDarLikeDislikeServices verDarLikeDislikeService =
+                            new CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Services.VerDarLikeDislikeService(context);
+                        int idx = 0;
+                        while (idx < usuarios.Count)
+                        {
+                            var u = usuarios[idx];
+                            AnsiConsole.Clear();
+                            CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Application.Services.VerDarLikeDislikeService.MostrarPerfilUsuario(u);
+
+                            var accion = AnsiConsole.Prompt(
+                                new SelectionPrompt<string>()
+                                    .Title("[yellow]¿Qué deseas hacer con este perfil?[/]")
+                                    .AddChoices(new[] { "💖 Corazón (Like)", "❌ X (Dislike)", "🚪 Salir" })
+                            );
+
+                            if (accion == "🚪 Salir")
+                                break;
+
+                            int idTipoInteraccion = accion == "💖 Corazón (Like)" ? tipoLike.IdTipoInteraccion : tipoDislike.IdTipoInteraccion;
+                            // Registrar la interacción
+                            await verDarLikeDislikeService.VerDarLikeDislike(usuarioActual.IdUsuario, u.IdUsuario, idTipoInteraccion);
+
+                            // Preguntar si quiere seguir viendo perfiles
+                            var seguir = AnsiConsole.Confirm("¿Deseas ver el siguiente perfil?");
+                            if (!seguir)
+                                break;
+                            idx++;
+                        }
                         break;
                     case "[yellow]✏️ Editar Cuenta[/]":
                         var usuarioEditar = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);
@@ -69,8 +131,8 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.UTILS
                         break;
                     case "[red]❤️ Ir a Matches[/]":
                         break;
-                    case "[purple]📊 Ver estadísticas del sistema[/]":
-                        break;
+                   
+                    
                     case "[darkorange]🗑️ Eliminar Cuenta[/]":
                         // Obtener el usuario por nombre de usuario
                         var usuarioEliminar = await context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == _nombreUsuario);

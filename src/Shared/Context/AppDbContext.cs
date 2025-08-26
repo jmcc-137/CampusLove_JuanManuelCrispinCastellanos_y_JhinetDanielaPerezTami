@@ -15,12 +15,14 @@ public class AppDbContext : DbContext
     }
     // los Dbset van aqui
     // public DbSet<Jugador> juagador => set<Jugadores>();
-        public DbSet<Usuarios.Domain.Entities.Usuarios> Usuarios => Set<Usuarios.Domain.Entities.Usuarios>();
-        public DbSet<Generos.Domain.Entities.Genero> Generos => Set<Generos.Domain.Entities.Genero>();
-        public DbSet<Carreras.Domain.Entities.Carreras> Carreras => Set<Carreras.Domain.Entities.Carreras>();
-        public DbSet<Intereses.Domain.Entities.Intereses> Intereses => Set<Intereses.Domain.Entities.Intereses>();
 
+    public DbSet<Usuarios.Domain.Entities.Usuarios> Usuarios => Set<Usuarios.Domain.Entities.Usuarios>();
+    public DbSet<Generos.Domain.Entities.Genero> Generos => Set<Generos.Domain.Entities.Genero>();
+    public DbSet<Carreras.Domain.Entities.Carreras> Carreras => Set<Carreras.Domain.Entities.Carreras>();
+    public DbSet<Intereses.Domain.Entities.Intereses> Intereses => Set<Intereses.Domain.Entities.Intereses>();
     public DbSet<Matches.Domain.Entities.Matches> Matches => Set<Matches.Domain.Entities.Matches>();
+    public DbSet<Interacciones.Domain.Entities.Interacciones> Interacciones => Set<Interacciones.Domain.Entities.Interacciones>();
+    public DbSet<TiposInteracciones.Domain.Entities.TiposInteracciones> TiposInteracciones => Set<TiposInteracciones.Domain.Entities.TiposInteracciones>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

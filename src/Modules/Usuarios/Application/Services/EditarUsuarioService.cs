@@ -121,37 +121,55 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 
             // Editar intereses
             var interesesActuales = usuario.UsuariosIntereses.Select(ui => ui.Interes?.NombreInteres ?? "").ToList();
-            var seleccionados = AnsiConsole.Prompt(
-                new Spectre.Console.MultiSelectionPrompt<string>()
-                    .Title($"Selecciona tus intereses (ENTER para mantener los actuales: {string.Join(", ", interesesActuales)})")
-                    .NotRequired()
-                    .PageSize(10)
-                    .MoreChoicesText("[grey](Desplázate para ver más intereses)[/]")
-                    .InstructionsText("[grey](<espacio> para seleccionar, <enter> para continuar)[/]")
-                    .AddChoices(opcionesInteres)
-                    .AddChoices("Mantener actuales", "Agregar nuevo")
-            );
-            if (seleccionados.Contains("Agregar nuevo"))
+            var seleccionados = new List<string>();
+            var opcionesInteresEdit = new List<string>(opcionesInteres);
+            while (true)
             {
-                string nuevoInteres = AnsiConsole.Prompt(new TextPrompt<string>("Ingrese el nuevo interés:").AllowEmpty());
-                if (!string.IsNullOrWhiteSpace(nuevoInteres))
+                var seleccion = AnsiConsole.Prompt(
+                    new Spectre.Console.MultiSelectionPrompt<string>()
+                        .Title($"Selecciona tus intereses (ENTER para mantener los actuales: {string.Join(", ", interesesActuales)})")
+                        .NotRequired()
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Desplázate para ver más intereses)[/]")
+                        .InstructionsText("[grey](<espacio> para seleccionar, <enter> para continuar)[/]")
+                        .AddChoices(opcionesInteresEdit)
+                        .AddChoices("Mantener actuales", "Agregar nuevo")
+                );
+                if (seleccion.Contains("Agregar nuevo"))
                 {
-                    var interesDb = await _context.Intereses.FirstOrDefaultAsync(i => i.NombreInteres == nuevoInteres);
-                    if (interesDb == null)
+                    string nuevoInteres = AnsiConsole.Prompt(new TextPrompt<string>("Ingrese el nuevo interés:").AllowEmpty());
+                    if (!string.IsNullOrWhiteSpace(nuevoInteres))
                     {
-                        interesDb = new Intereses { NombreInteres = nuevoInteres };
-                        _context.Intereses.Add(interesDb);
-                        await _context.SaveChangesAsync();
+                        var interesDb = await _context.Intereses.FirstOrDefaultAsync(i => i.NombreInteres == nuevoInteres);
+                        if (interesDb == null)
+                        {
+                            interesDb = new Intereses { NombreInteres = nuevoInteres };
+                            _context.Intereses.Add(interesDb);
+                            await _context.SaveChangesAsync();
+                        }
+                        if (!opcionesInteresEdit.Contains(nuevoInteres))
+                            opcionesInteresEdit.Add(nuevoInteres);
                     }
-                    seleccionados.Add(nuevoInteres);
+                    // Repetir el ciclo para que el usuario pueda seleccionar el nuevo interés
+                    continue;
                 }
+                else if (seleccion.Contains("Mantener actuales") || seleccion.Count == 0)
+                {
+                    // No cambios, mantener los intereses actuales
+                    seleccionados = interesesActuales;
+                }
+                else
+                {
+                    seleccionados = seleccion.Where(s => s != "Mantener actuales" && s != "Agregar nuevo").ToList();
+                }
+                break;
             }
-            if (!seleccionados.Contains("Mantener actuales") && seleccionados.Count > 0)
+            // Actualizar intereses solo si hubo cambios
+            if (seleccionados != null)
             {
-                // Actualizar intereses
                 var usuarioIntereses = await _context.Set<UsuariosIntereses>().Where(ui => ui.IdUsuario == usuario.IdUsuario).ToListAsync();
                 _context.Set<UsuariosIntereses>().RemoveRange(usuarioIntereses);
-                foreach (var interesNombre in seleccionados)
+                foreach (var interesNombre in seleccionados.Distinct())
                 {
                     var interesDb = await _context.Intereses.FirstOrDefaultAsync(i => i.NombreInteres == interesNombre);
                     if (interesDb != null)
