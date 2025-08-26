@@ -9,6 +9,6 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
     {
         public int IdCarrera { get; set; }
         public string NombreCarrera { get; set; } = string.Empty;
-        public virtual ICollection<Usuarios.Domain.Entities.Usuarios> Usuarios { get; set; } = new List<Usuarios.Domain.Entities.Usuarios>();
+        public virtual ICollection<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios> Usuarios { get; set; } = new List<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios>();
     }
 }

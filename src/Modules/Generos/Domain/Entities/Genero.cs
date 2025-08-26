@@ -9,6 +9,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
     {
         public int IdGenero { get; set; }
         public string NombreGenero { get; set; } = string.Empty;
-        public virtual ICollection<Usuarios.Domain.Entities.Usuarios> Usuarios { get; set; } = new List<Usuarios.Domain.Entities.Usuarios>();
+        // Relación inversa: un Genero tiene muchos Usuarios
+        public virtual ICollection<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios> Usuarios { get; set; } = new List<CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios>();
     }
 }

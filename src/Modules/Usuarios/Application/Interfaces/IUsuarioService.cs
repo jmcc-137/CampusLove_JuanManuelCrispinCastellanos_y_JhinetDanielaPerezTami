@@ -2,9 +2,10 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public interface IUsuarioService
     {
-        // Métodos de negocio para usuarios (ejemplo)
-        Task RegistrarUsuarioAsync(/* parámetros */);
-        Task<bool> LoginAsync(string nombreUsuario, string contrasena);
-        // Otros métodos según necesidades...
+ 
+        Task RegistrarUsuarioAsync(Domain.Entities.Usuarios usuario);
+        Task ActualizarUsuarioAsync(Domain.Entities.Usuarios usuario);
+        Task EliminarUsuarioAsync(int id);
+        Task<IEnumerable<Domain.Entities.Usuarios>> ObtenerTodosLosUsuariosAsync();
     }
 }
