@@ -19,7 +19,8 @@ public class AppDbContext : DbContext
         public DbSet<Generos.Domain.Entities.Genero> Generos => Set<Generos.Domain.Entities.Genero>();
         public DbSet<Carreras.Domain.Entities.Carreras> Carreras => Set<Carreras.Domain.Entities.Carreras>();
         public DbSet<Intereses.Domain.Entities.Intereses> Intereses => Set<Intereses.Domain.Entities.Intereses>();
-        public DbSet<UsuariosIntereses.Domain.Entities.UsuariosIntereses> UsuariosIntereses => Set<UsuariosIntereses.Domain.Entities.UsuariosIntereses>();
+
+    public DbSet<Matches.Domain.Entities.Matches> Matches => Set<Matches.Domain.Entities.Matches>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

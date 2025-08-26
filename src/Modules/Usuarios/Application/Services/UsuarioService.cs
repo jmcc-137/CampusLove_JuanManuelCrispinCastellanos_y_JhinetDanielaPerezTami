@@ -4,16 +4,38 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
 {
     public class UsuarioService : IUsuarioService
     {
-        public Task RegistrarUsuarioAsync(/* parámetros */)
+        private readonly IUsuarioRepository _usuarioRepository;
+
+        public UsuarioService(IUsuarioRepository usuarioRepository)
         {
-            // Implementación del registro
-            throw new NotImplementedException();
+            _usuarioRepository = usuarioRepository;
         }
 
-        public Task<bool> LoginAsync(string nombreUsuario, string contrasena)
+        public async Task RegistrarUsuarioAsync(Domain.Entities.Usuarios usuario)
         {
-            // Implementación del login
-            throw new NotImplementedException();
+            await _usuarioRepository.Add(usuario);
+            await _usuarioRepository.SaveAsync();
+        }
+
+        public async Task ActualizarUsuarioAsync(Domain.Entities.Usuarios usuario)
+        {
+            await _usuarioRepository.Update(usuario);
+            await _usuarioRepository.SaveAsync();
+        }
+
+        public async Task EliminarUsuarioAsync(int id)
+        {
+            var usuario = await _usuarioRepository.ObtenerUsuarioPorIdAsync(id);
+            if (usuario != null)
+            {
+                await _usuarioRepository.Remove(usuario);
+                await _usuarioRepository.SaveAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Domain.Entities.Usuarios>> ObtenerTodosLosUsuariosAsync()
+        {
+            return await _usuarioRepository.ObtenerUsuariosAsync();
         }
     }
 }
