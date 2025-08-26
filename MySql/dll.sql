@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS Interacciones (
     IdUsuarioDestino INT NOT NULL,
     IdTipoInteraccion INT NOT NULL,
     FechaInteraccion DATETIME DEFAULT NOW(),
-    FOREIGN KEY (IdUsuarioOrigen) REFERENCES Usuarios(IdUsuario),
-    FOREIGN KEY (IdUsuarioDestino) REFERENCES Usuarios(IdUsuario),
+    FOREIGN KEY (IdUsuarioOrigen) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE,
+    FOREIGN KEY (IdUsuarioDestino) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE,
     FOREIGN KEY (IdTipoInteraccion) REFERENCES TiposInteracciones(IdTipoInteraccion),
     UNIQUE KEY unique_interaccion (IdUsuarioOrigen, IdUsuarioDestino, FechaInteraccion)
 ) ENGINE=InnoDB;
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS Matches (
     IdUsuario2 INT NOT NULL,
     FechaMatch DATETIME DEFAULT NOW(),
     Activo BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (IdUsuario1) REFERENCES Usuarios(IdUsuario),
-    FOREIGN KEY (IdUsuario2) REFERENCES Usuarios(IdUsuario),
+    FOREIGN KEY (IdUsuario1) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE,
+    FOREIGN KEY (IdUsuario2) REFERENCES Usuarios(IdUsuario) ON DELETE CASCADE,
     UNIQUE KEY unique_match_pair (IdUsuario1, IdUsuario2),
     CHECK (IdUsuario1 < IdUsuario2)
 ) ENGINE=InnoDB;

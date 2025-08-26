@@ -12,5 +12,9 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
         public int IdUsuarioDestino { get; set; }
         public int IdTipoInteraccion { get; set; }
         public DateTime FechaInteraccion { get; set; }
+
+        public virtual Usuarios.Domain.Entities.Usuarios? UsuarioOrigen { get; set; }
+        public virtual Usuarios.Domain.Entities.Usuarios? UsuarioDestino { get; set; }
+        public virtual Usuarios.Domain.Entities.Usuarios? TipoInteraccion { get; set; }
     }
 }

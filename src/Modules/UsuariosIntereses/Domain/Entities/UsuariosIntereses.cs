@@ -12,5 +12,7 @@ namespace CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.M
         public int IdInteres { get; set; }
         public DateTime FechaRegistro { get; set; }
 
+        public virtual CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Usuarios.Domain.Entities.Usuarios? Usuario { get; set; }
+        public virtual CampusLove_JuanManuelCrispinCastellanos_y_JhinetDanielaPerezTami.src.Modules.Intereses.Domain.Entities.Intereses? Interes { get; set; }
     }
 }
